@@ -5,6 +5,7 @@
 
 'use strict';
 import Thing from '../api/thing/thing.model';
+import Player from '../api/player/player.model';
 
 Thing.find({}).remove()
   .then(() => {
@@ -36,5 +37,12 @@ Thing.find({}).remove()
       info: 'Easily deploy your app to Heroku or Openshift with the heroku ' +
              'and openshift subgenerators'
     });
+
+    Player.create(
+      {name: 'Chipper Jones', desc: '3B for braves', teamAbrv: 'ATL'},
+      {name: 'John Cena', desc: '3B for bos', teamAbrv: 'BOS'}
+    );
+
+
   });
 
