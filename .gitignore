@@ -9,5 +9,6 @@ dist
 npm-debug.log
 coverage
 .vagrant/
-/server/json/*
-!/server/json/.gitkeep
+/data/*
+!/data/.gitkeep
+!/data/json/.gitkeep

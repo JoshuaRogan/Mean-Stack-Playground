@@ -37,12 +37,43 @@ Thing.find({}).remove()
       info: 'Easily deploy your app to Heroku or Openshift with the heroku ' +
              'and openshift subgenerators'
     });
+  });
 
-    Player.create(
-      {name: 'Chipper Jones', desc: '3B for braves', teamAbrv: 'ATL'},
-      {name: 'John Cena', desc: '3B for bos', teamAbrv: 'BOS'}
-    );
-
+Player.find({}).remove()
+  .then(() => {
 
   });
 
+
+function getJSONFiles(dir){
+    let promises = [];
+
+    return fsp.readdir(dir)
+      .then((files) => {return files.map(file => {return `${dir}${file}`})})
+      .catch(console.log);
+}
+
+/**
+ * Parse out the JSON files for players 
+ * @param  {[type]} files [description]
+ * @return {[type]}       [description]
+ */
+function parseJSONFiles(files){
+  let promises = [];
+  let one = true; 
+
+  for(let file of files){
+    if(file.includes('.json') && one){
+      one = false;
+      let promise = parseJSON(file)
+        .then(json => {
+             createPlayer(json)
+                .then((player) => addStats(player, json)); 
+        })
+        .catch(trace);
+
+      promises.push(promise);
+    }
+  } 
+  return Promise.all(promises);
+}
