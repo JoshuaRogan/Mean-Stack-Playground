@@ -1,16 +1,16 @@
 /**
  * Using Rails-like standard naming convention for endpoints.
- * GET     /api/players              ->  index
- * POST    /api/players              ->  create
- * GET     /api/players/:id          ->  show
- * PUT     /api/players/:id          ->  update
- * DELETE  /api/players/:id          ->  destroy
+ * GET     /api/statistics              ->  index
+ * POST    /api/statistics              ->  create
+ * GET     /api/statistics/:id          ->  show
+ * PUT     /api/statistics/:id          ->  update
+ * DELETE  /api/statistics/:id          ->  destroy
  */
 
 'use strict';
 
 import _ from 'lodash';
-import Player from './player.model';
+import Statistic from './statistic.model';
 
 function respondWithResult(res, statusCode) {
   statusCode = statusCode || 200;
@@ -59,88 +59,43 @@ function handleError(res, statusCode) {
   };
 }
 
-function findByIDorSlug(idOrSlug) {
-  return Player.findById(idOrSlug).exec()
-    .then((doc) => {
-      if(doc) {
-        return Promise.resolve(doc);
-      }
-      else{
-        return getBySlug(idOrSlug);
-      }
-    })
-    .catch(() => {
-        return getBySlug(idOrSlug);
-    }); 
-}
-
-function getBySlug(slug){
-  return Player.find({slug: slug}).exec()
-    .then((docs) => {
-      if(docs.length > 0){
-        return Promise.resolve(docs);
-      }
-      else{
-        return Promise.resolve(false); 
-      }
-    });
-}
-
-function indexStream(query){
-  return query.stream();
-}
-
-// Gets a list of Players
+// Gets a list of Statistics
 export function index(req, res) {
-  let query = Player.find(); 
-  let limit = 10; 
-
-  if(req.query.list) {
-    query = query.select('name _id');
-  }
-
-  if(req.query.page){
-    let page = Number(req.query.page);
-    query.skip(page * limit);
-  }
-
-  query.limit(10); 
-
-  return query.exec()
+  return Statistic.find().exec()
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
 
-// Gets a single Player from the DB
+// Gets a single Statistic from the DB
 export function show(req, res) {
-  return findByIDorSlug(req.params.id)
+  return Statistic.findById(req.params.id).exec()
     .then(handleEntityNotFound(res))
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
 
-// Creates a new Player in the DB
+// Creates a new Statistic in the DB
 export function create(req, res) {
-  return Player.create(req.body)
+  return Statistic.create(req.body)
     .then(respondWithResult(res, 201))
     .catch(handleError(res));
 }
 
-// Updates an existing Player in the DB
+// Updates an existing Statistic in the DB
 export function update(req, res) {
   if (req.body._id) {
     delete req.body._id;
   }
-  return Player.findById(req.params.id).exec()
+  return Statistic.findById(req.params.id).exec()
     .then(handleEntityNotFound(res))
     .then(saveUpdates(req.body))
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
 
-// Deletes a Player from the DB
+// Deletes a Statistic from the DB
 export function destroy(req, res) {
-  return Player.findById(req.params.id).exec()
+  return Statistic.findById(req.params.id).exec()
     .then(handleEntityNotFound(res))
     .then(removeEntity(res))
     .catch(handleError(res));

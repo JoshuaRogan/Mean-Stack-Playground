@@ -12,3 +12,4 @@ coverage
 /data/*
 !/data/.gitkeep
 !/data/json/.gitkeep
+!/data/json/aws.txt
