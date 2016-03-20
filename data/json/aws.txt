@@ -1,0 +1,2 @@
+//Download from aws
+aws s3 cp --recursive s3://mlb-rankings/baseballref/json/<date> .
