@@ -93,10 +93,10 @@ function indexStream(query){
 // Gets a list of Players
 export function index(req, res) {
   let query = Player.find(); 
-  let limit = 10; 
+  let limit = req.query.limit ? Number(req.query.limit) : 10; 
 
   if(req.query.list) {
-    query = query.select('name _id');
+    query = query.select('-yearlyStats');
   }
 
   if(req.query.page){
@@ -104,7 +104,7 @@ export function index(req, res) {
     query.skip(page * limit);
   }
 
-  query.limit(10); 
+  query.limit(limit);
 
   return query.exec()
     .then(respondWithResult(res))

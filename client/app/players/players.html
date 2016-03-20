@@ -1,0 +1,22 @@
+
+<header class="hero-unit" id="banner">
+  <div class="container">
+    <h1>The Players</h1>
+    <p class="lead">Database of <strong>{{$ctrl.players.length}}</strong> players.</p>
+    <img class='img-responsive' src="http://logonoid.com/images/mlb-logo.png" alt="MLB Logo">
+  </div>
+</header>
+
+<md-content>
+  <md-list flex>
+    <md-subheader class="md-no-sticky">3 line item</md-subheader>
+    <md-list-item class="md-2-line" ng-repeat="player in $ctrl.players | orderBy:'team'" ng-click="$ctrl.openPlayer(player)">
+    <i class="md-avatar mdi mdi-account-circle"></i>
+      <div class="md-list-item-text" layout="column" >
+        <h3>{{player.name}}</h3>
+        <p>{{player.team}}</p>
+      </div>
+    </md-list-item>
+    <md-divider ></md-divider>
+  </md-list>
+</md-content>

@@ -6,7 +6,8 @@ angular.module('testApp', [
   'ngResource',
   'ngSanitize',
   'btford.socket-io',
-  'ui.router'
+  'ui.router',
+  'ngMaterial'
 ])
   .config(function($urlRouterProvider, $locationProvider) {
     $urlRouterProvider
@@ -14,3 +15,4 @@ angular.module('testApp', [
 
     $locationProvider.html5Mode(true);
   });
+

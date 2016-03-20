@@ -21,7 +21,7 @@ describe('Component: mainComponent', function() {
     $state,
     socket) {
       $httpBackend = _$httpBackend_;
-      $httpBackend.expectGET('/api/things')
+      $httpBackend.expectGET('/api/players')
         .respond(['HTML5 Boilerplate', 'AngularJS', 'Karma', 'Express']);
 
       scope = $rootScope.$new();
@@ -33,7 +33,7 @@ describe('Component: mainComponent', function() {
       });
   }));
 
-  it('should attach a list of things to the controller', function() {
+  it('should attach a list of players to the controller', function() {
     mainComponent.$onInit();
     $httpBackend.flush();
     expect(mainComponent.awesomeThings.length).toBe(4);
